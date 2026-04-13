@@ -3,51 +3,757 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CareersMesh</title>
-  <meta name="description" content="AI career intelligence by major, region, and role." />
+  <title>CareersMesh | AI Career Intelligence</title>
+  <meta
+    name="description"
+    content="CareersMesh helps users understand job demand, hiring trends, and regional opportunity patterns through AI-powered career intelligence."
+  />
   <style>
+    :root {
+      --bg: #071028;
+      --bg-soft: #0d1733;
+      --card: rgba(255, 255, 255, 0.04);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #ffffff;
+      --muted: #c7d2e3;
+      --subtle: #8fa0bf;
+      --accent: #7aa2ff;
+      --accent-strong: #96b4ff;
+      --max-width: 1120px;
+      --radius: 20px;
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1020;
-      color: #ffffff;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(122, 162, 255, 0.12), transparent 30%),
+        linear-gradient(180deg, #061024 0%, #071028 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 16, 40, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 24px;
+      padding: 11px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #081126;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: var(--shadow);
     }
-    .container {
-      max-width: 760px;
+
+    .hero {
+      padding: 88px 0 56px;
     }
+
+    .hero-inner {
+      max-width: 920px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      color: var(--subtle);
+      font-size: 14px;
+      margin-bottom: 22px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
     h1 {
-      font-size: 56px;
+      margin: 0 0 20px;
+      font-size: clamp(44px, 8vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--muted);
+      max-width: 820px;
+    }
+
+    .hero-support {
+      margin-top: 18px;
+      font-size: 17px !important;
+      color: var(--subtle) !important;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 34px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #081126;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-strong);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .section {
+      padding: 44px 0;
+    }
+
+    .section-header {
+      max-width: 780px;
+      margin-bottom: 26px;
+    }
+
+    .section-label {
+      color: var(--accent-strong);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 5vw, 42px);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .section-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: rgba(122, 162, 255, 0.14);
+      color: var(--accent-strong);
+      font-weight: 700;
       margin-bottom: 16px;
     }
-    p {
-      font-size: 20px;
-      line-height: 1.6;
-      color: #cbd5e1;
-      margin: 0 0 16px;
+
+    .highlight {
+      background: linear-gradient(
+        180deg,
+        rgba(122, 162, 255, 0.08),
+        rgba(255, 255, 255, 0.03)
+      );
     }
-    .tag {
+
+    .faq-item {
+      padding: 22px 24px;
+    }
+
+    .faq-item h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .contact-box,
+    .waitlist-box {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: stretch;
+    }
+
+    .contact-side,
+    .waitlist-side {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-side p,
+    .waitlist-side p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .contact-email {
       display: inline-block;
-      padding: 8px 14px;
-      border: 1px solid #334155;
-      border-radius: 999px;
+      margin-top: 8px;
+      color: var(--accent-strong);
+      font-weight: 700;
+    }
+
+    .waitlist-note {
+      color: var(--subtle);
       font-size: 14px;
-      color: #94a3b8;
-      margin-bottom: 24px;
+    }
+
+    .footer {
+      padding: 36px 0 54px;
+      color: var(--subtle);
+      font-size: 14px;
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 980px) {
+      .grid-4,
+      .grid-3,
+      .grid-2,
+      .contact-box,
+      .waitlist-box {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px 0;
+      }
+
+      .nav-links {
+        gap: 14px;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-2,
+      .contact-box,
+      .waitlist-box {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 64px;
+      }
+
+      .card,
+      .contact-side,
+      .waitlist-side {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="tag">Coming Soon</div>
-    <h1>CareersMesh</h1>
-    <p>AI career intelligence by major, region, and role.</p>
-    <p>Track hiring trends, job demand, and location insights for your field.</p>
-  </div>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home">CareersMesh</a>
+
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a class="nav-cta" href="#waitlist">Join Waitlist</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-inner">
+        <div class="eyebrow">Coming Soon</div>
+        <h1>See where your major leads.</h1>
+        <p>
+          CareersMesh helps users understand job demand, hiring trends, and
+          regional opportunity patterns through AI-powered career intelligence.
+        </p>
+        <p class="hero-support">
+          Built for students, graduates, career explorers, and
+          education-focused platforms.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#waitlist">Join the Waitlist</a>
+          <a class="btn btn-secondary" href="#features">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">About</div>
+          <h2>Career intelligence, organized for clarity.</h2>
+          <p>
+            CareersMesh is an AI-powered career intelligence platform designed
+            to make job market signals easier to understand through structured
+            views by major, role, and region.
+          </p>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>What it is</h3>
+            <p>
+              A career insight platform focused on turning fragmented job market
+              information into more useful and readable signals.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Why it exists</h3>
+            <p>
+              Career information is often scattered, outdated, or too broad to
+              support real decision-making.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>What it aims to do</h3>
+            <p>
+              Help users understand where opportunities are emerging, how demand
+              is changing, and what that means for next steps.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Features</div>
+          <h2>What you can do with CareersMesh</h2>
+          <p>
+            CareersMesh brings structure to fragmented hiring data so users can
+            understand demand with more clarity and less noise.
+          </p>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="card">
+            <h3>Track job demand by major</h3>
+            <p>
+              See how hiring demand differs across academic backgrounds and
+              related career paths.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Compare regions and hotspots</h3>
+            <p>
+              Discover where opportunities are concentrated and which markets
+              are growing faster.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Monitor role and career trends</h3>
+            <p>
+              Understand which roles are rising, which are slowing down, and
+              where demand is shifting.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Turn job data into career signals</h3>
+            <p>
+              Use AI-powered analysis to identify practical patterns behind
+              hiring activity.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">How It Works</div>
+          <h2>From scattered listings to clearer career signals</h2>
+          <p>
+            CareersMesh transforms hiring activity into structured career
+            intelligence that is easier to read, compare, and act on.
+          </p>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="card highlight">
+            <div class="number">1</div>
+            <h3>Collect job market signals</h3>
+            <p>
+              Gather and organize relevant hiring information across roles,
+              locations, and categories.
+            </p>
+          </div>
+
+          <div class="card highlight">
+            <div class="number">2</div>
+            <h3>Map demand by major, role, and region</h3>
+            <p>
+              Structure demand into clearer views that connect educational
+              background with job market movement.
+            </p>
+          </div>
+
+          <div class="card highlight">
+            <div class="number">3</div>
+            <h3>Surface more actionable insights</h3>
+            <p>
+              Help users explore trends, compare regions, and identify stronger
+              opportunity patterns with less noise.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="use-cases">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Use Cases</div>
+          <h2>Built for more than one kind of user</h2>
+          <p>
+            CareersMesh is designed to support individual exploration as well as
+            broader education and workforce use cases.
+          </p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>For students</h3>
+            <p>
+              Explore what roles align with your major and where job demand is
+              strongest.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>For recent graduates</h3>
+            <p>
+              Track market direction and identify regions or roles with stronger
+              hiring activity.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>For career switchers</h3>
+            <p>
+              Compare adjacent career paths and better understand where
+              transitions may be more realistic.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>For universities and career centers</h3>
+            <p>
+              Support career guidance with more structured job market visibility.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">FAQ</div>
+          <h2>Frequently asked questions</h2>
+          <p>
+            A simple overview of what CareersMesh is, who it is for, and what
+            it aims to offer.
+          </p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card faq-item">
+            <h3>What is CareersMesh?</h3>
+            <p>
+              CareersMesh is an AI-powered career intelligence platform focused
+              on job demand by major, region, and role.
+            </p>
+          </div>
+
+          <div class="card faq-item">
+            <h3>Who is it for?</h3>
+            <p>
+              It is designed for students, graduates, career explorers, and
+              education-focused platforms.
+            </p>
+          </div>
+
+          <div class="card faq-item">
+            <h3>Is CareersMesh a job board?</h3>
+            <p>
+              Not exactly. It is built to help users understand career demand
+              and market patterns, not just browse job posts.
+            </p>
+          </div>
+
+          <div class="card faq-item">
+            <h3>What kind of insights will it offer?</h3>
+            <p>
+              The platform is designed to surface hiring trends, regional
+              opportunity patterns, and role demand signals.
+            </p>
+          </div>
+
+          <div class="card faq-item">
+            <h3>Is it live yet?</h3>
+            <p>
+              The first version is currently in development and available as an
+              early website preview.
+            </p>
+          </div>
+
+          <div class="card faq-item">
+            <h3>How can I get access?</h3>
+            <p>
+              You can join the waitlist or contact us for updates and early
+              access interest.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Contact</div>
+          <h2>Let’s stay in touch</h2>
+          <p>
+            Whether you are interested in early access, collaboration, or
+            product feedback, feel free to reach out.
+          </p>
+        </div>
+
+        <div class="contact-box">
+          <div class="contact-side">
+            <h3>Email</h3>
+            <p>
+              We are currently building the first version of CareersMesh and
+              welcome early feedback.
+            </p>
+            <a class="contact-email" href="mailto:hello@careersmesh.com">
+              hello@careersmesh.com
+            </a>
+          </div>
+
+          <div class="contact-side">
+            <h3>Current status</h3>
+            <p>
+              The product is in progress. More features, data views, and launch
+              updates will be shared in future releases.
+            </p>
+            <p class="waitlist-note">
+              You can replace this email later with your real business email.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="waitlist">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Waitlist</div>
+          <h2>Get early access to CareersMesh</h2>
+          <p>
+            Join the waitlist to receive launch updates, early access news, and
+            future product announcements.
+          </p>
+        </div>
+
+        <div class="waitlist-box">
+          <div class="waitlist-side">
+            <h3>Join the waitlist</h3>
+            <p>
+              The first version of CareersMesh is currently in development.
+              Early access signup will be available soon.
+            </p>
+            <a class="btn btn-primary" href="mailto:hello@careersmesh.com?subject=CareersMesh%20Waitlist">
+              Request Early Access
+            </a>
+          </div>
+
+          <div class="waitlist-side">
+            <h3>What to expect</h3>
+            <p>
+              Early access users will get updates on launch progress, product
+              direction, and future feature releases.
+            </p>
+            <p class="waitlist-note">
+              Later, you can replace this with a real signup form from
+              Formspree, Tally, ConvertKit, or another tool.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <div>© 2026 CareersMesh. All rights reserved.</div>
+
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a href="#waitlist">Waitlist</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
