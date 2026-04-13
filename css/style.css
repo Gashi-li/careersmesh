@@ -437,3 +437,38 @@ h2 {
       linear-gradient(180deg, rgba(8, 17, 33, 0.86) 0%, rgba(8, 17, 33, 0.72) 55%, rgba(8, 17, 33, 0.56) 100%);
   }
 }
+/* ===== Language Switch ===== */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lang-switch a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.lang-switch a:hover {
+  color: var(--text);
+}
+
+.lang-switch a.active {
+  background: var(--accent);
+  color: #081121;
+  box-shadow: var(--shadow);
+}
